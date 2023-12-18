@@ -1,0 +1,9 @@
+[
+  {
+    "id": 1,
+    "title": "Samrtphone",
+    "photo": "https://picsum.photos/200",
+    "price": 100,
+    "stock": 10
+  }
+]
