@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Roman",
+    "photo": "https://picsum.photos/200",
+    "email": "jH6Qm@example.com"
+  },
+  {
+    "id": 2,
+    "name": "Roman",
+    "photo": "https://picsum.photos/200",
+    "email": "jH6Qm@example.com"
+  }
+]
