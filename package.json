@@ -1,0 +1,17 @@
+{
+  "name": "backend-coderhouse",
+  "version": "1.0.0",
+  "description": "Curso backend coderhouse",
+  "main": "server.js",
+  "type":"module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
