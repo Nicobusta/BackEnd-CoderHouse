@@ -1,10 +1,11 @@
-const fs = require("fs");
+import fs from "fs";
+import crypto from "crypto";
 
 class UserManager{
     static #user=[]
 
     constructor() {
-      this.path = "./data/user.json";
+      this.path = "./data/fs/files/user.json";
       this.conf = "utf-8";
       this.init();
     }
@@ -28,9 +29,7 @@ class UserManager{
             );
           }
           const newUser = {
-            id: UserManager.#user.length===0 
-              ? 1 
-              : UserManager.#user[UserManager.#user.length-1].id+1,
+            id: crypto.randomBytes(12).toString("hex"),
             name: data.name,
             photo: data.photo,
             email: data.email,
@@ -62,10 +61,10 @@ class UserManager{
     readOne(id){
       try {
         const user =UserManager.#user.find(
-          (user) => user.id === Number(id)
+          (user) => user.id === id
         );
         if (!user) {
-          throw new Error("No se encontro producto!");
+          throw new Error("No se encontro usuario!");
         } else {
           return user;
         }
@@ -73,12 +72,29 @@ class UserManager{
         return error.message;
       }
     }
-}
 
-const Manager = new UserManager();
-console.log(Manager.read());
-console.log(Manager.create({ photo: "https://picsum.photos/200", email: "jH6Qm@example.com"}));
-console.log(Manager.create({name: "Roman", photo: "https://picsum.photos/200", email: "jH6Qm@example.com"}))
-console.log(Manager.read());
-console.log(Manager.readOne(1));
-console.log(Manager.readOne(3))
+    destroy(id){
+      try {
+        const user = UserManager.#user.find(
+          (product) => product.id === id
+        );
+        if (!user) {
+          throw new Error("No se encontro usuario!");
+        } else {
+          const index = UserManager.#user.indexOf(user);
+          UserManager.#user.splice(index, 1);
+          fs.writeFileSync(
+            this.path,
+            JSON.stringify(UserManager.#user, null, 2)
+          );
+          return "Usuario eliminado";
+        }
+      } catch (error) {
+        return error.message;
+      }
+    }
+  }
+
+
+const ManagerUser = new UserManager();
+export default ManagerUser

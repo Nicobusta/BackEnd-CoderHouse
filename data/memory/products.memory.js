@@ -1,3 +1,5 @@
+import crypto from "crypto";
+
 class ProductManager {
   static #products = [];
   constructor() {
@@ -6,11 +8,7 @@ class ProductManager {
   create(data) {
     try {
       const newProduct = {
-        id:
-          ProductManager.#products.length === 0
-            ? 1
-            : ProductManager.#products[ProductManager.#products.length - 1].id +
-              1,
+        id: crypto.randomBytes(12).toString("hex"),
         title: data.title,
         photo: data.photo,
         price: data.price,

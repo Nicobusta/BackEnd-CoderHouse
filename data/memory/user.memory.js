@@ -1,3 +1,5 @@
+import crypto from "crypto";
+
 class UserManager{
     static #user=[]
 
@@ -7,9 +9,7 @@ class UserManager{
     create(data){
       try {
         const newUser = {
-          id: UserManager.#user.length===0 
-            ? 1 
-            : UserManager.#user[UserManager.#user.length-1].id+1,
+          id: crypto.randomBytes(12).toString("hex"),
           name: data.name,
           photo: data.photo,
           email: data.email,

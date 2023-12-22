@@ -1,10 +1,11 @@
-const fs = require("fs");
+import fs from "fs";
+import crypto from "crypto";
 
 class ProductManager {
   static #products = [];
 
   constructor() {
-    this.path = "./data/products.json";
+    this.path = "./data/fs/files/products.json";
     this.conf = "utf-8";
     this.init();
   }
@@ -28,11 +29,7 @@ class ProductManager {
         );
       }
       const newProduct = {
-        id:
-          ProductManager.#products.length === 0
-            ? 1
-            : ProductManager.#products[ProductManager.#products.length - 1].id +
-              1,
+        id: crypto.randomBytes(12).toString("hex"),
         title: data.title,
         photo: data.photo,
         price: data.price,
@@ -66,7 +63,7 @@ class ProductManager {
   readOne(id) {
     try {
       const product = ProductManager.#products.find(
-        (product) => product.id === Number(id)
+        (product) => product.id === id
       );
       if (!product) {
         throw new Error("No se encontro producto!");
@@ -77,13 +74,28 @@ class ProductManager {
       return error.message;
     }
   }
+
+  destroy(id){
+    try {
+      const product = ProductManager.#products.find(
+        (product) => product.id === id
+      );
+      if (!product) {
+        throw new Error("No se encontro producto!");
+      } else {
+        const index = ProductManager.#products.indexOf(product);
+        ProductManager.#products.splice(index, 1);
+        fs.writeFileSync(
+          this.path,
+          JSON.stringify(ProductManager.#products, null, 2)
+        );
+        return "Producto eliminado";
+      }
+    } catch (error) {
+      return error.message;
+    }
+  }
 }
 
-const Manager = new ProductManager();
-console.log(Manager.create({photo: "https://picsum.photos/200", price: 100, stock: 10})); 
-console.log(Manager.create({title: "Samrtphone", photo: "https://picsum.photos/200", price: 100, stock: 10}))
-console.log(Manager.read());
-console.log(Manager.readOne(3));
-console.log(Manager.readOne(1)); 
-
-  
+const ManagerProduct = new ProductManager();
+export default ManagerProduct;
