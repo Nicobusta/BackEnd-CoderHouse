@@ -1,7 +1,21 @@
 [
   {
-    "id": 1,
+    "id": "5111a4ea81c32dbd5477c21d",
     "title": "Samrtphone",
+    "photo": "https://picsum.photos/200",
+    "price": 100,
+    "stock": 10
+  },
+  {
+    "id": "9ce6860611be7957a06c4c7d",
+    "title": "Laptop",
+    "photo": "https://picsum.photos/200",
+    "price": 100,
+    "stock": 10
+  },
+  {
+    "id": "5b55316e4b171d2f26c2ebb0",
+    "title": "Tablet",
     "photo": "https://picsum.photos/200",
     "price": 100,
     "stock": 10
