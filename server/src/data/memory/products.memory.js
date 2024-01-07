@@ -44,7 +44,7 @@ class ProductManager {
   readOne(id) {
     try {
       const product = ProductManager.#products.find(
-        (product) => product.id === Number(id)
+        (product) => product.id === id
       );
 
       if(product){
@@ -56,6 +56,49 @@ class ProductManager {
       return error.message
     }
     
+  }
+
+  destroy(id){
+    try {
+      const product = ProductManager.#products.find(
+        (product) => product.id === id
+      );
+      if (!product) {
+        throw new Error("No se encontro producto!");
+      } else {
+        const index = ProductManager.#products.indexOf(product);
+        ProductManager.#products.splice(index, 1);
+        
+        return "Producto eliminado";
+      }
+    } catch (error) {
+      return error.message;
+    }
+  }
+
+  update(id,data){
+    try {
+     const one= this.readOne(id);
+     
+     if(!one){
+       throw new Error("No se encontro producto!")
+      }else{
+
+        const index = ProductManager.#products.indexOf(one);
+          one.title= data.title || one.title,
+          one.photo= data.photo || one.photo,
+          one.price= data.price || one.price,
+          one.stock= data.stock || one.stock,
+
+          ProductManager.#products[index] = one;
+          
+
+        return "producto actualizada"
+      }
+
+    } catch (error) {
+      return error.message;
+    }
   }
 }
 
