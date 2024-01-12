@@ -5,7 +5,7 @@ class UserManager{
     static #user=[]
 
     constructor() {
-      this.path = "./data/fs/files/user.json";
+      this.path = "./src/data/fs/files/user.json";
       this.conf = "utf-8";
       this.init();
     }
@@ -23,11 +23,7 @@ class UserManager{
 
     create(data){
         try {
-          if (!data.name || !data.photo || !data.email) {
-            throw new Error(
-              "Los campos name, photo, email son obligatorias"
-            );
-          }
+          
           const newUser = {
             id: crypto.randomBytes(12).toString("hex"),
             name: data.name,
@@ -89,6 +85,30 @@ class UserManager{
           );
           return "Usuario eliminado";
         }
+      } catch (error) {
+        return error.message;
+      }
+    }
+
+    update(id,data){
+      try {
+       const one= this.readOne(id);
+  
+        if(!one){
+          throw new Error("No se encontro usuario!")
+        }else{
+          one.name= data.name || one.name,
+          one.photo= data.photo || one.photo,
+          one.email= data.email || one.email,
+  
+          fs.writeFileSync(
+            this.path,
+            JSON.stringify(UserManager.#user, null, 2)
+          );
+  
+          return "usuario actualizada"
+        }
+  
       } catch (error) {
         return error.message;
       }

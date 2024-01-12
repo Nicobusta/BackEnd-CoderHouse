@@ -46,7 +46,7 @@ class UserManager{
 
     readOne(id){
       try {
-          const user= UserManager.#user.find((user) => user.id === Number(id));
+          const user= UserManager.#user.find((user) => user.id === id);
       
           if(user){
             return user
@@ -56,6 +56,47 @@ class UserManager{
         } catch (error) {
           return error.message
         }
+    }
+
+    update(id,data){
+      try {
+       const one= this.readOne(id);
+  
+        if(!one){
+          throw new Error("No se encontro usuario!")
+        }else{
+
+          const index = UserManager.#user.indexOf(user);
+          one.name= data.name || one.name,
+          one.photo= data.photo || one.photo,
+          one.email= data.email || one.email,
+  
+          UserManager.#user[index] = one;
+  
+          return "usuario actualizada"
+        }
+  
+      } catch (error) {
+        return error.message;
+      }
+    }
+
+    destroy(id){
+      try {
+        const user = UserManager.#user.find(
+          (user) => user.id === id
+        );
+        if (!user) {
+          throw new Error("No se encontro usuario!");
+        } else {
+          const index = UserManager.#user.indexOf(user);
+          UserManager.#user.splice(index, 1);
+          
+          return "Usuario eliminado";
+        }
+      } catch (error) {
+        return error.message;
+      }
     }
 }
 

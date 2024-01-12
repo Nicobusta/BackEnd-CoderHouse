@@ -5,7 +5,7 @@ class ProductManager {
   static #products = [];
 
   constructor() {
-    this.path = "./data/fs/files/products.json";
+    this.path = "./src/data/fs/files/products.json";
     this.conf = "utf-8";
     this.init();
   }
@@ -23,11 +23,7 @@ class ProductManager {
 
   create(data) {
     try {
-      if (!data.title || !data.photo || !data.price || !data.stock) {
-        throw new Error(
-          "Los campos title, photo, price, stock son obligatorias"
-        );
-      }
+      
       const newProduct = {
         id: crypto.randomBytes(12).toString("hex"),
         title: data.title,
@@ -91,6 +87,31 @@ class ProductManager {
         );
         return "Producto eliminado";
       }
+    } catch (error) {
+      return error.message;
+    }
+  }
+
+  update(id,data){
+    try {
+     const one= this.readOne(id);
+
+      if(!one){
+        throw new Error("No se encontro producto!")
+      }else{
+          one.title= data.title || one.title,
+          one.photo= data.photo || one.photo,
+          one.price= data.price || one.price,
+          one.stock= data.stock || one.stock,
+
+        fs.writeFileSync(
+          this.path,
+          JSON.stringify(ProductManager.#products, null, 2)
+        );
+
+        return "producto actualizada"
+      }
+
     } catch (error) {
       return error.message;
     }
