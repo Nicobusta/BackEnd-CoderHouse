@@ -1,0 +1,37 @@
+[
+  {
+    "id": "5b55316e4b171d2f26c2ebb0",
+    "title": "tablet samsung",
+    "photo": "https://i.blogs.es/d5b3eb/acer_predator8_gaming_tablet/450_1000.jpg",
+    "stock": 5,
+    "price": 3000
+  },
+  {
+    "id": "ca82151d5832d32f2b6dfc62",
+    "title": "laptop",
+    "photo": "https://images.start.com.ar/82JH00KLAR.jpg",
+    "price": 100,
+    "stock": 10
+  },
+  {
+    "id": "6d4ee0a456e11436274c8a20",
+    "title": "tv",
+    "photo": "https://topesdegama.com/app/uploads-topesdegama.com/2020/03/td-system-43-gaming.jpg",
+    "price": 100,
+    "stock": 10
+  },
+  {
+    "id": "d418ef60c816a0fd03b832b1",
+    "title": "auriculares",
+    "photo": "https://www.ecelectronica.com.ar/9601-large_default/auriculares-inalambricos-in-ear-xpods4-bt-53-doble-mic-tws-negro.jpg",
+    "price": "4000",
+    "stock": "40"
+  },
+  {
+    "id": "87c693a360185c5a0c00bae6",
+    "title": "vincha",
+    "photo": "https://http2.mlstatic.com/D_NQ_NP_969304-MLA31619952513_072019-O.webp",
+    "price": "5000",
+    "stock": "35"
+  }
+]
