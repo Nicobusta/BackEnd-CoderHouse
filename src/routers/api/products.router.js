@@ -1,7 +1,7 @@
 import { Router } from "express"
-import ManagerProduct  from "../../data/fs/products.fs.js"
+//import ManagerProduct  from "../../data/fs/products.fs.js"
 import propsProducts from "../../middlewares/propsProducts.js";
-
+import {ManagerProduct}  from "../../data/mongo/manager.mongo.js"
 const productsRouter = Router()
 
 productsRouter.post("/", propsProducts, async (req, res, next) => {
@@ -22,7 +22,7 @@ productsRouter.post("/", propsProducts, async (req, res, next) => {
 
 productsRouter.get ('/', async (req,res, next)=>{
     try {
-        const products = await ManagerProduct.read()
+        const products = await ManagerProduct.read({})
         if(products){
             return res.json({
                 statusCode: 200,

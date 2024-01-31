@@ -21,8 +21,17 @@ ordersRouter.post("/", propsOrder, async (req, res, next) => {
   
 
 ordersRouter.get ('/', async (req,res, next)=>{
+    
     try {
-        const orders = await ManagerOrders.read()
+        let filter = {}
+        let order = {}
+        if (req.query.uid) {
+        filter = { uid: req.query.uid }
+        }
+        /* if (req.query.state) {
+        order = { state: req.query.state }
+        } */
+        const orders = await ManagerOrders.read({filter, order})
         if(orders){
             return res.json({
                 statusCode: 200,
