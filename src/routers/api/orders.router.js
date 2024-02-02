@@ -1,5 +1,6 @@
 import { Router } from "express"
-import ManagerOrders  from "../../data/fs/orders.fs.js"
+//import ManagerOrders  from "../../data/fs/orders.fs.js"
+import {ManagerOrders}  from "../../data/mongo/manager.mongo.js"
 import propsOrder from "../../middlewares/propsOrders.js";
 
 const ordersRouter = Router()
@@ -28,9 +29,9 @@ ordersRouter.get ('/', async (req,res, next)=>{
         if (req.query.uid) {
         filter = { uid: req.query.uid }
         }
-        /* if (req.query.state) {
-        order = { state: req.query.state }
-        } */
+         if (req.query.pid) {
+        order = { pid: req.query.pid }
+        } 
         const orders = await ManagerOrders.read({filter, order})
         if(orders){
             return res.json({
