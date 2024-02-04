@@ -1,5 +1,6 @@
 import { Router } from "express"
-import ManagerOrders  from "../../data/fs/orders.fs.js"
+//import ManagerOrders  from "../../data/fs/orders.fs.js"
+import {ManagerOrders}  from "../../data/mongo/manager.mongo.js"
 import propsOrder from "../../middlewares/propsOrders.js";
 
 const ordersRouter = Router()
@@ -21,8 +22,17 @@ ordersRouter.post("/", propsOrder, async (req, res, next) => {
   
 
 ordersRouter.get ('/', async (req,res, next)=>{
+    
     try {
-        const orders = await ManagerOrders.read()
+        let filter = {}
+        let order = {}
+        if (req.query.uid) {
+        filter = { uid: req.query.uid }
+        }
+         if (req.query.pid) {
+        order = { pid: req.query.pid }
+        } 
+        const orders = await ManagerOrders.read({filter, order})
         if(orders){
             return res.json({
                 statusCode: 200,

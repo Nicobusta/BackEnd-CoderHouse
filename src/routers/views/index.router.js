@@ -37,6 +37,8 @@ viewsRouter.get('/register', (req, res, next) => {
     }
 })
 
+
+
 /* viewsRouter.use('/users', usersRouter)
 viewsRouter.use('/products', productsRouter) */
 

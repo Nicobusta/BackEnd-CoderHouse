@@ -1,5 +1,6 @@
 import { Router } from "express"
-import ManagerUser  from "../../data/fs/user.fs.js"
+//import ManagerUser  from "../../data/fs/user.fs.js"
+import {ManagerUser}  from "../../data/mongo/manager.mongo.js"
 import propsUser from "../../middlewares/propsUser.js";
 const usersRouter = Router()
 
@@ -20,7 +21,7 @@ usersRouter.post("/", propsUser, async (req, res, next) => {
 
   usersRouter.get ('/', async (req,res, next)=>{
     try {
-        const users = await ManagerUser.read()
+        const users = await ManagerUser.read({})
         if(users){
             return res.json({
                 statusCode: 200,
@@ -38,6 +39,20 @@ usersRouter.post("/", propsUser, async (req, res, next) => {
     }
     
 })
+
+usersRouter.get("/:email", async (req, res, next) => {
+    try {
+      const { email } = req.params;
+      const filter = { email: email };
+      const all = await ManagerUser.readByEmail(filter);
+      return res.json({
+        statusCode: 200,
+        response: all,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  });
 
 usersRouter.get ('/:uid', async (req,res, next)=>{
     try {

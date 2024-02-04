@@ -1,9 +1,10 @@
+import "dotenv/config.js"
 import express from 'express'
 import { createServer } from "http";
 import { Server } from "socket.io";
 import morgan from "morgan";
 import {engine} from 'express-handlebars';
-
+import dbConnection from "./src/utils/db.js"
 import router from './src/routers/index.router.js'
 import errorHandler from "./src/middlewares/errorHandler.js";
 import pathHandler from "./src/middlewares/pathHandler.js";
@@ -13,6 +14,7 @@ import socketUtils from "./src/utils/sockets.utils.js"
 const server=express()
 const PORT=8080
 const ready = ()=>{
+    dbConnection()
     console.log(`Server ready on port ${PORT}`)
 }
 
