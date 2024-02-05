@@ -1,21 +1,32 @@
 import {socketServer} from "../../server.js"
-import ManagerProduct from "../data/fs/products.fs.js"
+//import ManagerProduct from "../data/fs/products.fs.js"
+import { ManagerProduct } from "../data/mongo/manager.mongo.js";
 import propsProductUtils from "./propsProducts.utils.js";
 
 export default (socket) => {
     
     console.log("client " + socket.id + " connected");
 
-    socket.emit("products", ManagerProduct.read());
+     async function readProductsAndEmit(socket) {
+      try {
+          const products = await ManagerProduct.read({});
+          socket.emit("products", products);
+      } catch (error) {
+          console.log(error);
+      }
+    }
+    readProductsAndEmit(socket);
 
     socket.on("new product", async (data) => {
-        console.log(data);
+       
       try {
         propsProductUtils(data);
         await ManagerProduct.create(data);
-        socketServer.emit("products", ManagerProduct.read());
+        readProductsAndEmit(socket)
       } catch (error) {
         console.log(error);
       }
     }); 
-  }
+  } 
+
+ 
