@@ -1,6 +1,7 @@
 import Product from "./models/products.models.js";
 import User from "./models/users.models.js";
 import Order from "./models/orders.models.js";
+import { Types } from "mongoose";
 
 class MongoManager {
     constructor(model) {
@@ -16,11 +17,10 @@ class MongoManager {
           }
        
      }
-    async read(obj) {
+    async read({ filter, sortAndPaginate }) {
         try {
-            let { filter, order} = obj;
-            const all = await this.model.find(filter).sort(order);
-            if(all.length === 0){
+            const all = await this.model.paginate(filter,sortAndPaginate)
+            if(all.totalPages === 0){
                 const error= new Error("there aren't elements")
                 error.statusCode=404
                 throw error
@@ -88,6 +88,34 @@ class MongoManager {
           throw error;
         } 
      
+   }
+
+   async report(uid){
+    try {
+      const report = await this.model.aggregate([
+        { $match: { uid: new Types.ObjectId(uid)} },
+
+        { $lookup: {
+          from: "products",
+          foreignField: "_id",
+          localField: "pid",
+          as: "product_id",
+        }},
+
+        { $replaceRoot: { newRoot: { $mergeObjects: [{ $arrayElemAt: ["$product_id", 0] }, "$$ROOT"] }}},
+
+        { $set: { subTotal: { $multiply: ["$quantity", "$price"] } } },
+
+        { $group: { _id: "$uid", total: { $sum: "$subTotal" } } },
+
+        { $project: { _id: 0, uid: "$_id", total: "$total", date: new Date() } }
+      ]);
+        
+
+        return report;
+      } catch (error) {
+        throw error;
+      }
    }
 
   

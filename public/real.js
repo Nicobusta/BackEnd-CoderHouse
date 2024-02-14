@@ -1,9 +1,8 @@
 const socket= io();
 
 socket.on("products", (data) => {
-    //console.log(data);
-    const template = data
-      .map(
+  const{ docs } = data;
+    const template = docs.map(
         (each) => `
         <div class="card m-2" style="width: 360px">
           <img src="${each.photo}" style="height: 240px" class="card-img-top object-fit-cover" alt="${each.title}">
@@ -12,5 +11,5 @@ socket.on("products", (data) => {
       `
       )
       .join("");
-    document.querySelector("#products").innerHTML = template;
+    document.querySelector("#products").innerHTML = template; 
   });

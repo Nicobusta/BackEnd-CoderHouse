@@ -1,7 +1,10 @@
 <section >
-    <article class="d-flex flex-wrap justify-content-center" id="products"></article>
+    <article class="d-flex flex-wrap justify-content-center" id="products">
+        {{#each products}}
+            <div class="card m-2" style="width: 360px">
+                <img src={{this.photo}} style="height: 240px" class="card-img-top object-fit-cover" alt="${each.title}">
+                <h5 class="p-2 text-center card-title">{{this.title}}</h5>
+            </div>
+        {{/each}}
+    </article>
 </section>
-
-
-<script src="/socket.io/socket.io.js"></script>
-<script src="/real.js"></script>

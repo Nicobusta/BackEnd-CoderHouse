@@ -24,15 +24,22 @@ ordersRouter.post("/", propsOrder, async (req, res, next) => {
 ordersRouter.get ('/', async (req,res, next)=>{
     
     try {
-        let filter = {}
-        let order = {}
-        if (req.query.uid) {
-        filter = { uid: req.query.uid }
+        const sortAndPaginate = {
+            sort: {state: 1},
+            page: parseInt(req.query.page) || 1,
+            limit: parseInt(req.query.limit) || 10
         }
-         if (req.query.pid) {
-        order = { pid: req.query.pid }
-        } 
-        const orders = await ManagerOrders.read({filter, order})
+
+        const filter = {}
+        if(req.query.uid){
+            filter.uid = req.query.uid
+        }
+
+        if (req.query.state === "desc") {
+            sortAndPaginate.sort.state = -1;
+        }
+
+        const orders = await ManagerOrders.read({filter,sortAndPaginate})
         if(orders){
             return res.json({
                 statusCode: 200,
@@ -72,6 +79,20 @@ ordersRouter.get ('/:uid', async (req,res, next)=>{
         return next(error);
     }
     
+})
+
+ordersRouter.get ('/total/:uid', async (req,res, next)=>{
+    try {
+        const {uid} = req.params
+        const report =await ManagerOrders.report(uid)
+        return res.json({
+            statusCode: 200,
+            response: report
+        })
+        
+    } catch (error) {
+        return next(error);
+    }
 })
 
 ordersRouter.delete('/:oid', async (req,res, next)=>{

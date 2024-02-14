@@ -1,6 +1,5 @@
 import { Router } from 'express';
-/* import usersRouter from './users.view.js';
-import productsRouter from './products.view.js'; */
+import {ManagerProduct}  from '../../data/mongo/manager.mongo.js'
 
 const viewsRouter = Router();
 
@@ -12,9 +11,26 @@ viewsRouter.get('/', (req, res, next) => {
     }
 })        
 
-viewsRouter.get('/real', (req, res, next) => {
+viewsRouter.get('/real', async (req, res, next) => {
     try{
-        return res.render("real",{})
+       const sortAndPaginate = {
+            sort: {price: 1},
+            page: parseInt(req.query.page) || 1,
+            limit: parseInt(req.query.limit) || 10
+        }
+
+        const filter = {}
+        if(req.query.title){
+            filter.title = new RegExp(req.query.title.trim(), "i");
+        }
+
+        if (req.query.price === "desc") {
+            sortAndPaginate.sort.price = -1;
+        } 
+        const readProducts = await ManagerProduct.read({filter,sortAndPaginate})
+        let products = readProducts.docs.map(doc => doc.toObject())
+
+        return res.render("real",{products: products})
     }catch(error){
         next(error)
     }
@@ -37,9 +53,5 @@ viewsRouter.get('/register', (req, res, next) => {
     }
 })
 
-
-
-/* viewsRouter.use('/users', usersRouter)
-viewsRouter.use('/products', productsRouter) */
 
 export default viewsRouter

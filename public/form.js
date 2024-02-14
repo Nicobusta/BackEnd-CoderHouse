@@ -12,7 +12,6 @@ document.querySelector("#newProduct").addEventListener("click", (event) => {
     price && (data.price = price);
     stock && (data.stock = stock);
     
-    //console.log(data);
     socket.emit("new product", data);
 
     alert("Producto Creado");

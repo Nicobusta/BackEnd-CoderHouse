@@ -21,7 +21,22 @@ usersRouter.post("/", propsUser, async (req, res, next) => {
 
   usersRouter.get ('/', async (req,res, next)=>{
     try {
-        const users = await ManagerUser.read({})
+        const sortAndPaginate = {
+            sort: {email: 1},
+            page: parseInt(req.query.page) || 1,
+            limit: parseInt(req.query.limit) || 10
+        }
+
+        const filter = {}
+        if(req.query.name){
+            filter.name = req.query.name
+        }
+
+        if (req.query.email === "desc") {
+            sortAndPaginate.sort.email = -1;
+        }
+
+        const users = await ManagerUser.read({filter,sortAndPaginate})
         if(users){
             return res.json({
                 statusCode: 200,
