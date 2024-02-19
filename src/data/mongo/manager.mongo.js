@@ -77,7 +77,7 @@ class MongoManager {
 
     async readByEmail(filter) {
       try {
-          const one = await this.model.find(filter);
+          const one = await this.model.findOne(filter);
           if(!one){
               const error= new Error("there isn't elements")
               error.statusCode=404
