@@ -11,12 +11,12 @@ const schema = new Schema({
   
 },{timestamps:true});
 
-/* schema.pre("find", function () {
+schema.pre("find", function () {
   this.populate("uid", "-createdAt -updatedAt -__v");
 });
 schema.pre("find", function () {
   this.populate("pid", "-createdAt -updatedAt -__v");
-}); */
+});
 
 schema.plugin(mongoosePaginate)
 const Order = model(collection, schema);
