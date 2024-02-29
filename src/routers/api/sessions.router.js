@@ -109,6 +109,7 @@ sessionsRouter.post("/", async (req, res, next) => {
         statusCode: 200,
         message: "Logged in!",
         token: req.session.token,
+        role: req.session.role,
       });
     }else{
       const error = new Error("No Auth");

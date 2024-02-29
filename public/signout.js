@@ -1,8 +1,7 @@
 fetch("/api/sessions/", { method: "POST" })
   .then((res) => res.json())
   .then((res) => {
-    console.log(res);
-
+    
     if(res.statusCode===200) {
       document.querySelector(".navbar-nav").removeChild(document.querySelector("#registerButton"))
       document.querySelector(".navbar-nav").removeChild(document.querySelector("#loginButton"))
@@ -28,10 +27,11 @@ fetch("/api/sessions/", { method: "POST" })
       document.querySelector(".navbar-nav").removeChild(document.querySelector("#ordersButton"))
       document.querySelector(".navbar-nav").removeChild(document.querySelector("#signout"))
     }
-    if (res.response?.role===0) {
+   
+    if (res.role===1) {
       document.querySelector(".navbar-nav").removeChild(document.querySelector("#formButton"))
 
-    } else if (res.response?.role===1) {
+    } else if (res.role===0) {
       document.querySelector(".navbar-nav").removeChild(document.querySelector("#ordersButton"))
     }
   });

@@ -37,8 +37,9 @@ passport.use(
         const user = await ManagerUser.readByEmail({email});
     
         if (user && verifyHash(password, user.password)) {
-          const token=createToken({email, role: user.name});
+          const token=createToken({email, role: user.role});
           req.session.token=token
+          req.session.role = user.role;
           return done(null, user);
         } else {
           return done(null, false);
