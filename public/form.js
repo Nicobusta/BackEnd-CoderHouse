@@ -16,7 +16,6 @@ document.querySelector("#newProduct").addEventListener("click", async() => {
     };
     let response = await fetch("/api/products/", opts);
     response = await response.json();
-    console.log(response);
     response.statusCode === 201
       ?  alert("Creado exitosamente")
       : alert("ERROR: " + response.message);

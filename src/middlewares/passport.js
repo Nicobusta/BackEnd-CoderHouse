@@ -1,10 +1,11 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { createHash, verifyHash } from "../utils/hash.utils.js";
+import { ExtractJwt, Strategy as JWTStrategy } from "passport-jwt";
 import { ManagerUser } from "../data/mongo/manager.mongo.js";
 import {Strategy as GoogleStrategy} from "passport-google-oauth2"
 import { createToken} from "../utils/token.utils.js";
-const {GOOGLE_ID, GOOGLE_CLIENT} = process.env;
+const {GOOGLE_ID, GOOGLE_CLIENT,SECRET} = process.env;
 
 
 passport.use(
@@ -20,7 +21,7 @@ passport.use(
           let user = await ManagerUser.create(data);
           return done(null, user);
         } else {
-          return done(null, false);
+          return done(null, false, { message: "User already exists", statusCode:400 });
         }
       } catch (error) {
         return done(error);
@@ -28,6 +29,8 @@ passport.use(
     }
   )
 );
+
+
 passport.use(
   "login",
   new LocalStrategy(
@@ -38,11 +41,10 @@ passport.use(
     
         if (user && verifyHash(password, user.password)) {
           const token=createToken({email, role: user.role});
-          req.session.token=token
-          req.session.role = user.role;
+          req.token=token
           return done(null, user);
         } else {
-          return done(null, false);
+          return done(null, false,{message: "Wrong credentials"});
         }
       } catch (error) {
         return done(error);
@@ -82,5 +84,29 @@ passport.use(
   )
 );
 
-
+//jwt
+passport.use(
+  "jwt",
+  new JWTStrategy(
+    {
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        (req) => req?.cookies["token"],
+      ]),
+      secretOrKey: SECRET,
+    },
+    async (payload, done) => {
+      try {
+        const user = await ManagerUser.readByEmail({email:payload.email});
+        if (user) {
+          user.password = null;
+          return done(null, user);
+        } else {
+          return done(null, false);
+        }
+      } catch (error) {
+        return done(error);
+      }
+    }
+  )
+);
 export default passport;

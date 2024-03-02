@@ -14,7 +14,7 @@ fetch("/api/sessions/", { method: "POST" })
           let response = await fetch("/api/sessions/signout", opts);
           response = await response.json();
           if (response.statusCode === 200) {
-            alert(response.message);
+            alert(response.response);
             
             location.replace("/");
           }
@@ -28,10 +28,10 @@ fetch("/api/sessions/", { method: "POST" })
       document.querySelector(".navbar-nav").removeChild(document.querySelector("#signout"))
     }
    
-    if (res.role===1) {
+    if (res.response?.role===0) {
       document.querySelector(".navbar-nav").removeChild(document.querySelector("#formButton"))
 
-    } else if (res.role===0) {
+    } else if (res.response?.role===1) {
       document.querySelector(".navbar-nav").removeChild(document.querySelector("#ordersButton"))
     }
   });

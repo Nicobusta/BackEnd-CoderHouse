@@ -12,7 +12,7 @@ selectors.forEach((each) =>
       response = await response.json();
       console.log(response);
       if(response.statusCode===200) {
-        alert(response.message);
+        alert(response.response);
         location.reload()
       }
     } catch (error) {
