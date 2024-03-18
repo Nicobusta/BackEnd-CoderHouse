@@ -4,14 +4,41 @@
     width="100%"
     src="https://www.infinit.com.uy/imgs/presentaciones/presentaciones0_6982.jpg?1698897136"
   />
-
-  <section>
-    <article
-      class="d-flex flex-wrap justify-content-center"
-      id="products"
-    ></article>
+<section class=" py-3 position-relative d-flex justify-content-center align-items-center">
+    <input
+      id="text"
+      type="text"
+      style="width: 250px; border-radius:10px"
+      class="p-2 text-center"
+      placeholder="search..."
+    />
+    <svg id="search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="search"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
   </section>
+  <section >
+    <article class="d-flex flex-wrap justify-content-center" id="products">
+        {{#each products}}
+            <div class="card m-2" style="width: 360px">
+                <img src={{this.photo}} style="height: 240px" class="card-img-top object-fit-cover" alt="${each.title}">
+                <h5 class="p-2 text-center card-title">{{this.title}}</h5>
+            </div>
+        {{/each}}
+    </article>
+</section>
+
+  <span class="w-100 d-flex justify-content-center">
+    {{#if prev}}
+      <a
+        class="btn btn-primary fs-5 m-4 mt-0"
+        href="/?title={{filter}}&page={{prev}}"
+      >PREV</a>
+     {{/if}}
+    {{#if next}}
+      <a
+        class="btn btn-primary fs-5 m-4 mt-0"
+        href="/?title={{filter}}&page={{next}}"
+      >NEXT</a>
+     {{/if}} 
+  </span>
 
 </main>
-<script src="/socket.io/socket.io.js"></script>
-<script src="/real.js"></script>
+<script src="/index.js"></script>

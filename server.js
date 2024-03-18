@@ -5,7 +5,8 @@ import morgan from "morgan";
 import {engine} from 'express-handlebars';
 import dbConnection from "./src/utils/db.js"
 import __dirname from "./utils.js";
-import router from './src/routers/index.router.js'
+/* import router from './src/routers/index.router.js' */
+import IndexRouter from './src/routers/index.router.js'
 import errorHandler from "./src/middlewares/errorHandler.js";
 import pathHandler from "./src/middlewares/pathHandler.js";
 import { Server } from "socket.io";
@@ -84,7 +85,8 @@ server.use(express.urlencoded({extended:true}))
 server.use(express.static(__dirname+"/public"))
 server.use(morgan("dev")) 
 
-server.use("/",router)
+const router=new IndexRouter()
+server.use("/",router.getRouter())
 server.use(errorHandler)
 server.use(pathHandler)
 

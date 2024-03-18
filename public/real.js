@@ -13,3 +13,5 @@ socket.on("products", (data) => {
       .join("");
     document.querySelector("#products").innerHTML = template; 
   });
+
+  
