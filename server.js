@@ -16,6 +16,7 @@ import cookieParser from "cookie-parser";
 import expressSession from "express-session";
 //Simport sessionFileStore from "session-file-store";
 import MongoStore from "connect-mongo";
+import cors from "cors"
 
 //servers
 const server=express()
@@ -78,6 +79,12 @@ server.use(
     }),
   })
 );
+
+
+server.use(cors({
+    origin:true,
+    credentials:true
+}))
 
 //middle
 server.use(express.json())
