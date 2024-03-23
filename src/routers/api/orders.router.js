@@ -1,5 +1,5 @@
 import CustomRouter from "../CustomRouter.js";
-import {create, read, readOne, report, update, destroy} from "../../controlers/orderControles.js";
+import {create, read, readOne, report, update, destroy} from "../../controllers/orderControles.js";
 
 class OrdersRouter extends CustomRouter{
     init(){

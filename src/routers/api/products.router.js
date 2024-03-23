@@ -8,7 +8,7 @@ import {
   readOne,
   update,
   destroy,
-} from "../../controlers/productControler.js";
+} from "../../controllers/productControler.js";
 
 class ProductsRouter extends CustomRouter {
   init() {

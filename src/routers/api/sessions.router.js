@@ -10,7 +10,7 @@ import {
   forbidden,
   signoutError,
   badauth,
-} from "../../controlers/sessionControler.js";
+} from "../../controllers/sessionControler.js";
 
 class SessionsRouter extends CustomRouter {
   init() {

@@ -2,7 +2,7 @@ import CustomRouter from "../CustomRouter.js";
 //import ManagerUser  from "../../data/fs/user.fs.js"
 import {ManagerUser}  from "../../data/mongo/manager.mongo.js"
 import propsUser from "../../middlewares/propsUser.js";
-import {create, read, readByEmail, readOne, update, destroy} from "../../controlers/userControler.js";
+import {create, read, readByEmail, readOne, update, destroy} from "../../controllers/userControler.js";
 
 
 class UsersRouter extends CustomRouter {
