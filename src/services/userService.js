@@ -1,14 +1,13 @@
-import {ManagerUser} from './../data/mongo/manager.mongo.js';
-
-
+import repository from "../repositories/users.rep.js";
+import sendEmail from "../utils/sendMail.utils.js";
 class UserService{
     constructor(){
-        this.model=ManagerUser
+        this.repository=repository
     }
 
     create=async (data)=>{
         try {
-         const response= await this.model.create(data);
+         const response= await this.repository.create(data);
          return response
         } catch (error) {
          throw error
@@ -17,7 +16,7 @@ class UserService{
  
      read=async ({filter,sortAndPaginate})=>{
          try {
-             const response= await this.model.read({filter,sortAndPaginate});
+             const response= await this.repository.read({filter,sortAndPaginate});
              return response
          } catch (error) {
              throw error
@@ -26,7 +25,7 @@ class UserService{
  
      readOne=async (id)=>{
          try {
-             const response= await this.model.readOne(id);
+             const response= await this.repository.readOne(id);
              return response
          } catch (error) {
              throw error
@@ -35,7 +34,7 @@ class UserService{
 
      readByEmail=async (email)=>{
          try {
-             const response= await this.model.readByEmail(email);
+             const response= await this.repository.readByEmail(email);
              return response
          } catch (error) {
              throw error
@@ -44,7 +43,7 @@ class UserService{
  
      update=async (id,data)=>{
          try {
-             const response= await this.model.update(id,data);
+             const response= await this.repository.update(id,data);
              return response
          } catch (error) {
              throw error
@@ -53,10 +52,18 @@ class UserService{
  
      destroy=async (id)=>{
          try {
-             const response= await this.model.destroy(id);
+             const response= await this.repository.destroy(id);
              return response
          } catch (error) {
              throw error
+         }
+     }
+
+     register = async (data) => {
+         try {
+            await sendEmail(data)
+         } catch (error) {
+             return next(error);
          }
      }
 }

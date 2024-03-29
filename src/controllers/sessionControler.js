@@ -1,15 +1,21 @@
-class SecssionControler{
+import userService from "../services/userService.js"
+class SessionControler{
     constructor(){
-        
+        this.service= userService
     }
 
-    register= async (req,res, next)=>{
-        try {
-            return res.success201("Registered!");
-          } catch (error) {
-            return next(error);
-          }
-    }
+    register = async (req, res, next) => {
+       const { email, name, verifiedCode } = req.body;
+      await this.service.register({ email, name, verifiedCode });
+      try {
+        return res.json({
+          statusCode: 201,
+          message: "Registered!",
+        });
+      } catch (error) {
+        return next(error);
+      }
+    };
 
     login= async (req,res, next)=>{
         try {
@@ -66,9 +72,30 @@ class SecssionControler{
             return next(error);
           }
     }
+
+    verifyAccount = async (req, res, next) => {
+      try {
+        const { email, verifiedCode } = req.body;
+        const user = await service.readByEmail(email);
+        if (user.verifiedCode === verifiedCode) {
+          await service.update(user._id, { verified: true });
+          return res.json({
+            statusCode: 200,
+            message: "Verified user!",
+          });
+        } else {
+          return res.json({
+            statusCode: 400,
+            message: "Invalid verified token!",
+          });
+        }
+      } catch (error) {
+        return next(error);
+      }
+    };
 }
 
-export default SecssionControler
-const  controller = new SecssionControler()
-const {register, login, signout, me, badauth, forbidden, signoutError} = controller
-export {register, login, signout, me, badauth, forbidden, signoutError}
+export default SessionControler
+const  controller = new SessionControler()
+const {register, login, signout, me, badauth, forbidden, signoutError, verifyAccount} = controller
+export {register, login, signout, me, badauth, forbidden, signoutError, verifyAccount}

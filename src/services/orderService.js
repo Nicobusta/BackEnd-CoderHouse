@@ -1,14 +1,13 @@
-import {ManagerOrders} from './../data/mongo/manager.mongo.js';
-
+import repository from "../repositories/orders.rep.js";
 
 class OrderService{
     constructor(){
-        this.model=ManagerOrders
+        this.repository=repository
     }
 
     create=async (data)=>{
         try {
-         const response= await this.model.create(data);
+         const response= await this.repository.create(data);
          return response
         } catch (error) {
          throw error
@@ -17,7 +16,7 @@ class OrderService{
  
      read=async ({filter,sortAndPaginate})=>{
          try {
-             const response= await this.model.read({filter,sortAndPaginate});
+             const response= await this.repository.read({filter,sortAndPaginate});
              return response
          } catch (error) {
              throw error
@@ -26,7 +25,7 @@ class OrderService{
  
      readOne=async (id)=>{
          try {
-             const response= await this.model.readOne(id);
+             const response= await this.repository.readOne(id);
              return response
          } catch (error) {
              throw error
@@ -35,7 +34,7 @@ class OrderService{
 
      report=async (id)=>{
          try {
-             const response= await this.model.report(id);
+             const response= await this.repository.report(id);
              return response
          } catch (error) {
              throw error
@@ -44,7 +43,7 @@ class OrderService{
  
      update=async (id,quantity,state)=>{
          try {
-             const response= await this.model.update(id,quantity,state);
+             const response= await this.repository.update(id,quantity,state);
              return response
          } catch (error) {
              throw error
@@ -53,7 +52,7 @@ class OrderService{
  
      destroy=async (id)=>{
          try {
-             const response= await this.model.destroy(id);
+             const response= await this.repository.destroy(id);
              return response
          } catch (error) {
              throw error

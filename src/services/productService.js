@@ -1,9 +1,7 @@
-import {ManagerProduct} from './../data/mongo/manager.mongo.js';
-
-
+import repository from "../repositories/products.rep.js";
 class ProductService{
     constructor(){
-        this.model=ManagerProduct
+        this.repository=repository
     }
 
     create=async (data)=>{
@@ -17,7 +15,7 @@ class ProductService{
 
     read=async ({filter,sortAndPaginate})=>{
         try {
-            const response= await this.model.read({filter,sortAndPaginate});
+            const response= await this.repository.read({filter,sortAndPaginate});
             return response
         } catch (error) {
             throw error
@@ -35,7 +33,7 @@ class ProductService{
 
     update=async (id,data)=>{
         try {
-            const response= await this.model.update(id,data);
+            const response= await this.repository.update(id,data);
             return response
         } catch (error) {
             throw error
@@ -44,7 +42,7 @@ class ProductService{
 
     destroy=async (id)=>{
         try {
-            const response= await this.model.destroy(id);
+            const response= await this.repository.destroy(id);
             return response
         } catch (error) {
             throw error
