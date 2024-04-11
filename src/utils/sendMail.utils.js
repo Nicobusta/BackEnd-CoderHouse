@@ -1,17 +1,18 @@
 import { createTransport } from "nodemailer";
+import env from "./env.utils.js";
 
 async function sendEmail(data) {
   try {
     const transport = createTransport({
       service: "gmail",
-      port: process.env.PORT,
+      port: env.PORT,
       auth: {
-        user: process.env.GOOGLE_EMAIL,
-        pass: process.env.GOOGLE_PASS,
+        user: env.GOOGLE_EMAIL,
+        pass: env.GOOGLE_PASS,
       },
     });
     await transport.sendMail({
-      from: `E-COMMERCE <${process.env.GOOGLE_EMAIL}>`,
+      from: `E-COMMERCE <${env.GOOGLE_EMAIL}>`,
       to: data.email,
       subject: `USER ${data.name.toUpperCase()} REGISTERED!`,
       html: `
