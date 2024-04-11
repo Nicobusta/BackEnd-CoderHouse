@@ -7,7 +7,7 @@ class UserControler{
     create=async(req,res)=>{
         try {
             const data = req.body;
-            const response = await ManagerUser.create(data);
+            const response = await this.service.create(data);
             
               return res.success201(response);
             
@@ -32,7 +32,7 @@ class UserControler{
                 sortAndPaginate.sort.email = -1;
             }
     
-            const users = await ManagerUser.read({filter,sortAndPaginate})
+            const users = await this.service.read({filter,sortAndPaginate})
             if(users){
                 return res.success200(users)
             }else{
@@ -47,7 +47,7 @@ class UserControler{
     readOne=async(req,res)=>{
         try {
             const {uid} = req.params
-            const user =await ManagerUser.readOne(uid)
+            const user =await this.service.readOne(uid)
             if(user){
                 return res.success200(user)
             }else{
@@ -63,7 +63,7 @@ class UserControler{
         try {
             const { email } = req.params;
             const filter = { email: email };
-            const all = await ManagerUser.readByEmail(filter);
+            const all = await this.service.readByEmail(filter);
             return res.success200(all)
           } catch (error) {
             return next(error);
@@ -74,7 +74,7 @@ class UserControler{
         try {
             const {uid} = req.params
             const data = req.body;
-            const user = await ManagerUser.update(uid,data)
+            const user = await this.service.update(uid,data)
             if(user){
                 return res.success200(user)
             }else{
@@ -89,7 +89,7 @@ class UserControler{
     destroy=async(req,res)=>{
         try {
             const {uid} = req.params
-            const user = await ManagerUser.destroy(uid)
+            const user = await this.service.destroy(uid)
             if(user){
                 return res.success200(user)
             }else{

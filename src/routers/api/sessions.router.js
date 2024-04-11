@@ -10,7 +10,8 @@ import {
   forbidden,
   signoutError,
   badauth,
-} from "../../controlers/sessionControler.js";
+  verifyAccount,
+} from "../../controllers/sessionControler.js";
 
 class SessionsRouter extends CustomRouter {
   init() {
@@ -58,6 +59,8 @@ class SessionsRouter extends CustomRouter {
     this.post("/", ["USER", "ADMIN", "PREM"], passCb("jwt"), me);
 
     this.get("/signoutError", ["PUBLIC"], signoutError);
+
+    this.post("/verifyAccount", ["PUBLIC"], verifyAccount);
   }
 }
 
