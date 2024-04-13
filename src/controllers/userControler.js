@@ -1,4 +1,7 @@
 import userService from "../services/userService.js";
+import CustomError from "../utils/errors/CustomError.js";
+import errors from "../utils/errors/errors.js";
+
 class UserControler{
     constructor(){
         this.service=userService
@@ -8,9 +11,11 @@ class UserControler{
         try {
             const data = req.body;
             const response = await this.service.create(data);
-            
-              return res.success201(response);
-            
+            if(response){
+                return res.success201(response);
+            }else{
+                CustomError.new(errors.notFound);
+            }
           } catch (error) {
               return next(error);
           }
@@ -36,7 +41,7 @@ class UserControler{
             if(users){
                 return res.success200(users)
             }else{
-                return res.error404()
+                CustomError.new(errors.notFound);
             }
             
         } catch (error) {
@@ -51,7 +56,7 @@ class UserControler{
             if(user){
                 return res.success200(user)
             }else{
-                return res.error404()
+                CustomError.new(errors.notFound);
             }
             
         } catch (error) {
@@ -64,7 +69,11 @@ class UserControler{
             const { email } = req.params;
             const filter = { email: email };
             const all = await this.service.readByEmail(filter);
-            return res.success200(all)
+            if(all){
+                return res.success200(all)
+            }else{
+                CustomError.new(errors.notFound);
+            }
           } catch (error) {
             return next(error);
           }
@@ -78,7 +87,7 @@ class UserControler{
             if(user){
                 return res.success200(user)
             }else{
-                return res.error404()
+                CustomError.new(errors.notFound);
             }
             
         } catch (error) {
@@ -93,7 +102,7 @@ class UserControler{
             if(user){
                 return res.success200(user)
             }else{
-                return res.error404()
+                CustomError.new(errors.notFound);
             }
             
         } catch (error) {

@@ -1,7 +1,4 @@
 class CustomError {
-    constructor() {
-      
-    }
     static new({ message, statusCode }) {
       const error = new Error(message);
       error.statusCode = statusCode;

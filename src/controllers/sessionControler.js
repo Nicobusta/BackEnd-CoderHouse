@@ -1,4 +1,5 @@
 import userService from "../services/userService.js"
+
 class SessionControler{
     constructor(){
         this.service= userService
@@ -79,15 +80,17 @@ class SessionControler{
         const user = await service.readByEmail(email);
         if (user.verifiedCode === verifiedCode) {
           await service.update(user._id, { verified: true });
-          return res.json({
+          return res.success200(user)
+          /* return res.json({
             statusCode: 200,
             message: "Verified user!",
-          });
+          }); */
         } else {
-          return res.json({
+          return res.error400("Invalid verified token!");
+          /* return res.json({
             statusCode: 400,
             message: "Invalid verified token!",
-          });
+          }); */
         }
       } catch (error) {
         return next(error);
