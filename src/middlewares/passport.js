@@ -5,6 +5,7 @@ import { ExtractJwt, Strategy as JWTStrategy } from "passport-jwt";
 import users from "../data/mongo/users.mongo.js";
 import {Strategy as GoogleStrategy} from "passport-google-oauth2"
 import { createToken} from "../utils/token.utils.js";
+import errors from "../utils/errors/errors.js";
 const {GOOGLE_ID, GOOGLE_CLIENT,SECRET} = process.env;
 
 
@@ -21,7 +22,7 @@ passport.use(
           let user = await users.create(data);
           return done(null, user);
         } else {
-          return done(null, false, { message: "User already exists", statusCode:400 });
+          return done(null, false, errors.existPass);
         }
       } catch (error) {
         return done(error);
@@ -44,7 +45,7 @@ passport.use(
           req.token=token
           return done(null, user);
         } else {
-          return done(null, false,{message: "Wrong credentials"});
+          return done(null, false,errors.auth);
         }
       } catch (error) {
         return done(error);

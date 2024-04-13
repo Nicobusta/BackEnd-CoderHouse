@@ -1,5 +1,8 @@
 import { Types } from "mongoose";
+import CustomError from "../../utils/errors/CustomError.js";
+import errors from './../../utils/errors/errors.js';
 /* import ManagerOrders from './../fs/orders.fs'; */
+
 
 class MongoManager {
     constructor(model) {
@@ -18,11 +21,6 @@ class MongoManager {
     async read({ filter, sortAndPaginate }) {
         try {
             const all = await this.model.paginate(filter,sortAndPaginate)
-            if(all.totalPages === 0){
-                const error= new Error("there aren't elements")
-                error.statusCode=404
-                throw error
-            }
             return all;
           } catch (error) {
             throw error;
@@ -32,11 +30,6 @@ class MongoManager {
     async readOne(id) {
         try {
             const one = await this.model.findById(id);
-            if(!one){
-                const error= new Error("there isn't elements")
-                error.statusCode=404
-                throw error
-            }
             return one;
           } catch (error) {
             throw error;
@@ -47,11 +40,6 @@ class MongoManager {
         try {
             const opt= { new: true }
             const one = await this.model.findByIdAndUpdate(id, data, opt);
-            if(!one){
-                const error= new Error("there isn't elements")
-                error.statusCode=404
-                throw error
-            }
             return one;
           } catch (error) {
             throw error;
@@ -61,11 +49,6 @@ class MongoManager {
     async destroy(id) { 
         try {
             const one = await this.model.findByIdAndDelete(id);
-            if(!one){
-                const error= new Error("there isn't elements")
-                error.statusCode=404
-                throw error
-            }
             return one;
           } catch (error) {
             throw error;

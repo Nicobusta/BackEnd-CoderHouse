@@ -1,4 +1,6 @@
 import orderService from "../services/orderService.js";
+import CustomError from "../utils/errors/CustomError.js";
+import errors from "../utils/errors/errors.js";
 
 class OrderControler{
     constructor(){
@@ -9,7 +11,10 @@ class OrderControler{
         try {
             const data = req.body;
             const response = await  this.service.create(data);
-            return res.success201(response);
+            if(response){
+                return res.success201(response);
+            }
+            CustomError.new(errors.notFound);
         } catch (error) {
             return next(error);
         }
@@ -36,7 +41,7 @@ class OrderControler{
             if(orders){
                 return res.success200(orders)
             }else{
-                return res.error404()
+                CustomError.new(errors.notFound);
             }
             
         } catch (error) {
@@ -51,7 +56,7 @@ class OrderControler{
             if(order){
                 return res.success200(order)
             }else{
-                return res.error404()
+                CustomError.new(errors.notFound);
             }
             
         } catch (error) {
@@ -63,8 +68,10 @@ class OrderControler{
         try {
             const {uid} = req.params
             const report =await this.service.report(uid)
-            return res.success200(report)
-            
+            if(report){
+                return res.success200(report)
+            }
+            CustomError.new(errors.notFound);
         } catch (error) {
             return next(error);
         }
@@ -77,7 +84,7 @@ class OrderControler{
             if(order){
                 return res.success200(order)
             }else{
-                return res.error404()
+                CustomError.new(errors.notFound);
             }
             
         } catch (error) {
@@ -92,7 +99,7 @@ class OrderControler{
             if(order){
                 return res.success200(order)
             }else{
-                return res.error404()
+                CustomError.new(errors.notFound);
             }
             
         } catch (error) {
