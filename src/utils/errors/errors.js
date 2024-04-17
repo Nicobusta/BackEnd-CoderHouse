@@ -2,7 +2,6 @@ const errors = {
     message: (message) => ({ message, statusCode: 400 }),
     passCb: (message, statusCode) => ({ message, statusCode }),
     error: { message: "Error", statusCode: 400 },
-    token: { message: "Invalid verified token!", statusCode: 400 },
     existPass:{ message: "User already exists", statusCode:401 },
     auth: { message: "Invalid credentials", statusCode: 401 },
     forbidden: { message: "Forbidden", statusCode: 403 },
