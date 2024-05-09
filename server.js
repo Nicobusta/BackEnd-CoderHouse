@@ -22,6 +22,13 @@ import cors from "cors"
 import wintson from './src/middlewares/winston.js';
 import logger from './src/utils/logger/index.js';
 
+//swagger
+import swaggerOptions from "./src/utils/swagger.js";
+import swaggerJSDoc from "swagger-jsdoc";
+import { serve, setup } from "swagger-ui-express";
+
+
+
 //servers
 const server=express()
 const PORT=env.PORT ||8080
@@ -82,6 +89,9 @@ const FileStore = sessionFileStore(expressSession);
     }),
   })
 ); */
+
+const specs = swaggerJSDoc(swaggerOptions);
+server.use("/api/docs", serve, setup(specs)); 
 
 
 server.use(cors({
