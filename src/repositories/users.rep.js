@@ -3,12 +3,17 @@ import UsersDto from "../dto/user.dto.js";
 
 const {users}=dao
 
+
 class UsersRep {
     constructor() {
         this.model = users
     }
     
-    create = async (data) => {await this.model.create(new UsersDto(data))};
+    create = async (data) => {
+     const response = await this.model.create(UsersDto(data))
+     console.log(response);
+     return response;
+    };
       read = async ({ filter, options }) =>
         await this.model.read({ filter, options });
       readOne = async (id) => await this.model.readOne(id);

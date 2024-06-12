@@ -13,5 +13,6 @@ export default {
   SECRET_KEY: process.env.SECRET_KEY,
   GOOGLE_EMAIL: process.env.GOOGLE_EMAIL,
   GOOGLE_PASS: process.env.GOOGLE_PASS,
-  MODE: process.env.MODE
+  MODE: process.env.MODE,
+  STRIPE_KEY: process.env.STRIPE_KEY
 };
