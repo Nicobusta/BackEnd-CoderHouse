@@ -11,7 +11,7 @@ describe("Testeando el ecommerce", () => {
 
   
 
-/*    describe("Testeando sessions", async () => {
+describe("Testeando sessions", async () => {
     const user = {
       name: "Nico",
       email: "nico@nico.com",
@@ -51,7 +51,7 @@ describe("Testeando el ecommerce", () => {
       expect(_body.statusCode).to.be.equals(200);
       
     }); 
-  });   */
+  }); 
 
  describe("Testeando Products", () => {
 
