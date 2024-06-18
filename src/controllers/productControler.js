@@ -9,9 +9,10 @@ class ProductControler{
     }
 
     create= async (req,res, next)=>{
+        
         try {
             const data = req.body;
-            const response = await  this.service.create(data);
+            const response = await this.service.create(data);
             if(response){
                 return res.success201(response);
             }

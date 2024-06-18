@@ -1,4 +1,5 @@
 import Stripe from "stripe"
+import PaymentsDto from "../dto/payments.dto.js";
 import env from "../utils/env.utils.js";
 import dao from "../data/factory.js"
 
@@ -10,21 +11,14 @@ class PaymentRep {
         this.model = orders
     }
 
-    checkoutRepository=async (filter)=>{
+    checkoutRepository=async (id)=>{
         try {
-            const cart = await this.model.readOne(filter)
+            const filter={}
+            filter.uid=id
+            let cart = await this.model.read({filter})
             console.log(cart);
-            const line_items=[
-            /*     {
-                price_data:{
-                    currency:"usd",
-                    product_data:{
-                        name:"paralacutinga"
-                    },
-                    unit_amount: 1000
-                }
-            } */
-        ]
+            cart = cart.docs.map( (each) => new PaymentsDto(each))
+            const line_items = cart
             const mode = "payment"
             const success_url = "http://localhost:8080/Thanks.html"
             const intent= await stripe.checkout.sessions.create({

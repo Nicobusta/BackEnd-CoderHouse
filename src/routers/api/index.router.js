@@ -4,7 +4,7 @@ import ProductsRouter from "./products.router.js";
 import OrdersRouter from "./orders.router.js";
 import SessionsRouter from "./sessions.router.js";
 import PaymentsRouter from "./payments.router.js";
-import passCb from "../../middlewares/passCb.js";
+import passCallBack from "../../middlewares/passCallBack.js";
 import fs from "fs";
 
 const order = new OrdersRouter();
@@ -16,7 +16,7 @@ class ApiRouter extends CustomRouter{
     init(){
         this.router.use("/users",user.getRouter())
         this.router.use("/products",product.getRouter())
-        this.router.use("/orders",passCb("jwt"), order.getRouter())
+        this.router.use("/orders",passCallBack("jwt"), order.getRouter())
         this.router.use("/sessions",session.getRouter())
         this.router.use("/payments",payments.getRouter())
         this.router.use("/logger", async (req, res, next) => {

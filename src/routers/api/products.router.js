@@ -1,7 +1,7 @@
 import CustomRouter from "../CustomRouter.js";
 import propsProducts from "../../middlewares/propsProducts.js";
 import isAdmin from "../../middlewares/isAdmin.js";
-import passCb from "../../middlewares/passCb.js";
+import passCallBack from "../../middlewares/passCallBack.js";
 import {
   create,
   read,
@@ -15,13 +15,12 @@ class ProductsRouter extends CustomRouter {
     this.post(
       "/",
       ["ADMIN", "PREM"],
-      passCb("jwt"),
+      passCallBack("jwt"),
       isAdmin,
       propsProducts,
       create
     );
     
-
     this.get("/", ["PUBLIC"], read);
 
     this.get("/:pid", ["PUBLIC"], readOne);

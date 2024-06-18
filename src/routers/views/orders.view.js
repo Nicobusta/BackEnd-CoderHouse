@@ -1,12 +1,12 @@
 import CustomRouter from "../CustomRouter.js";
 import orders from "../../data/mongo/orders.mongo.js";
 import users from "../../data/mongo/users.mongo.js";
-import passCb from "../../middlewares/passCb.js";
+import passCallBack from "../../middlewares/passCallBack.js";
 /* import User from "../../data/mongo/models/users.models.js"; */
 
 class OrdersRouter extends CustomRouter {
   init() {
-      this.get("/", ["USER"], passCb("jwt"), async (req, res, next) => {
+      this.get("/", ["USER"], passCallBack("jwt"), async (req, res, next) => {
         try {
           const sortAndPaginate = {
               sort: {price: 1},

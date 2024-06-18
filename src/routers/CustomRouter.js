@@ -2,7 +2,7 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import users from "../data/mongo/users.mongo.js";
 import errors from "../utils/errors/errors.js";
-
+import env from '../utils/env.utils.js';
 export default class CustomRouter {
   constructor() {
     this.router = Router();
@@ -42,9 +42,11 @@ export default class CustomRouter {
       if (policies.includes("PUBLIC")) return next();
       
       let token = req.cookies["token"];
-      if (!token) return res.error401();
-      else {
-        const data = jwt.verify(token, process.env.SECRET);
+
+      if (!token) {
+        return res.error401();
+      }else {
+        const data = jwt.verify(token, env.SECRET);
         if (!data){
 
           return res.error400("Bad auth by token!");

@@ -9,72 +9,135 @@ const { products, users, orders } = dao;
 
 describe("Testeando el ecommerce", () => {
 
-  describe("Testeando users", () => {
+  
+
+/*    describe("Testeando sessions", async () => {
     const user = {
       name: "Nico",
       email: "nico@nico.com",
       password: "hola1234",
-      role: 0,
+      role: 1,
     };
     let uid;
     let token = {};
 
-    /* it("Registro de un usuario correctamente", async function() {
-      this.timeout(5000); // Aumenta el tiempo de espera a 5000ms
-    
-      try {
-        const response = await requester.post("/sessions/register").send(user);
-        const { _body, statusCode } = response;
-        //uid = _body.payload._id;
-        console.log(response);
-        expect(statusCode).to.be.equals(200);
-      } catch (error) {
-        console.error("Error en el test:", error);
-        throw error; // Lanza el error para que el test falle correctamente
-      }
-    }); */
-
-    /* it("Registro de un usuario correctamente", async () => {
+  it("Registro de un usuario correctamente", async () => {
       const response = await requester.post("/sessions/register").send(user);
-      const { _body, statusCode } = response;
-      //uid = _body.payload._id;
-      console.log(response);
-      expect(statusCode).to.be.equals(201);
-    }); */
+      const { _body} = response;
+      uid=_body.payload._id;
+      expect(_body.statusCode).to.be.equals(201);
+    }); 
 
     it("Inicio de sesión correctamente", async () => {
       const response = await requester.post("/sessions/login").send(user);
       const { statusCode, headers } = response; 
-      console.log(response);
       token.key = headers["set-cookie"][0].split("=")[0];
       token.value = headers["set-cookie"][0].split("=")[1];
+      
       expect(statusCode).to.be.equals(200);
     });
 
-    /*it("Cerrado de sesión correctamente", async () => {
+    it("Cerrado de sesión correctamente", async () => {
       const response = await requester.post("/sessions/signout").set("Cookie", [
         token.key + "=" + token.value,
       ]);
       const { statusCode } = response;
       expect(statusCode).to.be.equals(200);
-    });
-
+    })
+ 
     it("Eliminación de un usuario correctamente", async () => {
-      console.log(uid);
-      const response = await requester.delete("/users/" + uid);
+      const response = await requester.delete("/users/" + uid)
+      const { _body } = response;
+      expect(_body.statusCode).to.be.equals(200);
+      
+    }); 
+  });   */
+
+ describe("Testeando Products", () => {
+
+  it("Leer todos los producto correctamente", async () => {
+    const response = await requester.get("/products");
+    const { statusCode } = response;
+    expect(statusCode).to.be.equals(200);
+  });
+
+    it("Leer todos los producto correctamente", async () => {
+      const response = await requester.get("/products");
       const { statusCode } = response;
       expect(statusCode).to.be.equals(200);
-    }); */
+    });
 
-  }); 
+    it("Leer un producto correctamente", async () => {
+      const response = await requester.get("/products/" + pid);
+      const { statusCode } = response;
+      expect(statusCode).to.be.equals(200);
+    });
 
-  
+    it("Actualizacion de un producto correctamente", async () => {
+      const response = await requester.put("/products").send(prod_update);
+      const { statusCode } = response;
+      expect(statusCode).to.be.equals(200);
+    });
+
+    it("Eliminación de un producto correctamente", async () => {
+      const response = await requester.delete("/products/" + pid)
+      const { statusCode } = response;
+      expect(statusCode).to.be.equals(200);
+    }); 
+  })
+ 
+
   describe("Testeando Orders", () => {
   
-  })
+    const order = {
+      pid: "65b26e6b59c5a18624196777",
+      uid: "b5bf215fc8d669fa4fd75cc3",
+      quantity: 30,
+      state: 2
+    };
 
-  describe("Testeando Users", () => {
-    
-  })
+    const order_update={
+      quantity: 50,
+    }
+
+   it("Registro de una orden correctamente", async () => {
+    const response = await requester.post("/orders").send(prod);
+    const { _body, statusCode } = response;
+    pid=_body.payload._id;
+    expect(statusCode).to.be.equals(200);
+  });
+
+  it("Leer todas las ordenes correctamente", async () => {
+    const response = await requester.get("/orders");
+    const { statusCode } = response;
+    expect(statusCode).to.be.equals(200);
+  });
+
+  it("Lee las ordenas de un usuario correctamente", async () => {
+    const response = await requester.get("/orders/" + uid);
+    const { statusCode } = response;
+    expect(statusCode).to.be.equals(200);
+  });
+
+  it("Actualizacion de un orden correctamente", async () => {
+    const response = await requester.put("/orders").send(prod_update);
+    const { statusCode } = response;
+    expect(statusCode).to.be.equals(200);
+  });
+
+  it("retornar el total de la suma de las ordenes de un usuario correctamente", async () => {
+    const response = await requester.get("/orders/total/" + uid);
+    const { statusCode } = response;
+    expect(statusCode).to.be.equals(200);
+  }); 
+
+  it("Eliminación de una orden correctamente", async () => {
+    const response = await requester.delete("/orders/" + oid)
+    const { statusCode } = response;
+    expect(statusCode).to.be.equals(200);
+  }); 
+
+  })  
+
 
 })

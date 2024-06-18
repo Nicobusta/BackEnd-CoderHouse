@@ -3,9 +3,9 @@ class PaymentsService{
     constructor(){
         this.repository=repository
     }
-    checkoutService=async (filter)=>{
+    checkoutService=async (id)=>{
         try {
-            const response= await this.repository.checkoutRepository(filter);
+            const response= await this.repository.checkoutRepository(id);
             return response
         } catch (error) {
             throw error

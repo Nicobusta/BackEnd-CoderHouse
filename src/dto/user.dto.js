@@ -10,7 +10,7 @@ class UsersDto {
         this.role= data.role || 1,
         this.password= createHash(data.password),
         this.email= data.email,
-        this.verified = data.verified || false,
+        this.verified = data.verified || true,
         this.verifiedCode = crypto.randomBytes(12).toString("base64"),
         argsUtil.env !== "prod" && (this.updatedAt = new Date()),
         argsUtil.env !== "prod" && (this.createdAt = new Date())

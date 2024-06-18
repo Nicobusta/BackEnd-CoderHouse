@@ -1,7 +1,7 @@
 import CustomRouter from "../CustomRouter.js";
 import has8char from "../../middlewares/has8char.js";
 import passport from "../../middlewares/passport.js";
-import passCb from "../../middlewares/passCb.js";
+import passCallBack from "../../middlewares/passCallBack.js";
 import {
   register,
   login,
@@ -41,13 +41,13 @@ class SessionsRouter extends CustomRouter {
       ); */
 
     //register
-    this.post("/register", ["PUBLIC"], has8char, passCb("register"), register);
+    this.post("/register", ["PUBLIC"], has8char, passCallBack("register"), register);
 
     //login
-    this.post("/login", ["PUBLIC"], passCb("login"), login);
+    this.post("/login", ["PUBLIC"], passCallBack("login"), login);
 
     //signout
-    this.post("/signout", ["USER", "ADMIN", "PREM"], passCb("jwt"), signout);
+    this.post("/signout", ["USER", "ADMIN", "PREM"], passCallBack("jwt"), signout);
 
     //badauth
     this.get("/badauth", ["PUBLIC"], badauth);
@@ -56,7 +56,7 @@ class SessionsRouter extends CustomRouter {
     this.get("/forbidden", ["PUBLIC"], forbidden);
 
     //me
-    this.post("/", ["USER", "ADMIN", "PREM"], passCb("jwt"), me);
+    this.post("/", ["USER", "ADMIN", "PREM"], passCallBack("jwt"), me);
 
     this.get("/signoutError", ["PUBLIC"], signoutError);
 

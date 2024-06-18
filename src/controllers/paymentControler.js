@@ -9,8 +9,8 @@ class PaymentControler{
 
     checkoutController= async (req, res, next) => {
         try {
-            const { uid, total } = req.user;
-            const  response = await this.service.checkoutService(uid, total);
+            const { _id } = req.user;
+            const  response = await this.service.checkoutService(_id);
             if (response){
                 return res.json(response);
             }

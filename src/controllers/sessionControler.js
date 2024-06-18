@@ -8,11 +8,14 @@ class SessionControler{
     register = async (req, res, next) => {
        const { email, name, verifiedCode } = req.body;
       await this.service.register({ email, name, verifiedCode });
+      const response= await this.service.readByEmail({email:email})
       try {
         return res.json({
           statusCode: 201,
           message: "Registered!",
-        });
+          payload: response,
+        }); 
+        
       } catch (error) {
         return next(error);
       }
