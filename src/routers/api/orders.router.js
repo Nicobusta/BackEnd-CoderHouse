@@ -3,11 +3,11 @@ import {create, read, readOne, report, update, destroy} from "../../controllers/
 
 class OrdersRouter extends CustomRouter{
     init(){
-        this.post("/", ["USER"], create);
+        this.post("/", ["USER", "ADMIN"], create);
           
-        this.get ('/', ["USER"], read);
+        this.get ('/', ["PUBLIC"], read);
         
-        this.get ('/:uid', ["USER"], readOne)
+        this.get ('/:uid', ["PUBLIC"], readOne)
         
         this.get ('/total/:uid', ["USER"], report)
         

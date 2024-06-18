@@ -61,8 +61,11 @@ class UserService{
 
      register = async (data) => {
          try {
-            await sendEmail(data)
+            
+            /* await sendEmail(data) */
+            
          } catch (error) {
+           
              return next(error);
          }
      }

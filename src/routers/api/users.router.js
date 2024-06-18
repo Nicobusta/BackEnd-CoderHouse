@@ -17,7 +17,7 @@ class UsersRouter extends CustomRouter {
         
         this.put('/:uid', ["USER","ADMIN", "PREM"],update)
         
-        this.delete('/:uid', ["USER","ADMIN", "PREM"], destroy)
+        this.delete('/:uid', ["PUBLIC"], destroy)
         
     }
 }
